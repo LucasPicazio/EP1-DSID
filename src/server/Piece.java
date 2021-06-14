@@ -74,14 +74,17 @@ public class Piece implements Part{
 	}
 
 	@Override
-	public int countSubcomponents() {
-		
-		//TODO
-		int count = 0;
+	public int countSubcomponents(int count) {
 		
 		for (Subcomponent subcomponent : subcomponents) {
+			Piece subcomponentPiece = (Piece) subcomponent.getSubcomponent();
 			
-			count += subcomponent.getQuantity();
+			//Stop condition: primitive piece
+			if (!subcomponentPiece.isAggregated()) {
+				return subcomponent.getQuantity() + count;
+			}
+			
+			count += subcomponent.getQuantity() * subcomponentPiece.countSubcomponents(count);
 		}
 		
 		return count;

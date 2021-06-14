@@ -76,9 +76,9 @@ public class Server implements PartRepository{
 		motherBoard.addSubcomponent(processor);
 		motherBoard.addSubcomponent(vga);
 		
-		System.out.println("Nucleo Subcomponents = " + nucleo.countSubcomponents());
-		System.out.println("Processador Subcomponents = " + processor.countSubcomponents());
-		System.out.println("MotherBoard Subcomponents = " + motherBoard.countSubcomponents());
+		System.out.println("Nucleo Subcomponents = " + nucleo.countSubcomponents(0));
+		System.out.println("Processador Subcomponents = " + processor.countSubcomponents(0));
+		System.out.println("MotherBoard Subcomponents = " + motherBoard.countSubcomponents(0));
 		System.out.println("FIM DO TESTE");
 	}
 	
