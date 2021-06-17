@@ -87,7 +87,7 @@ public class Piece implements Part{
 
 	@Override
 	public int countSubcomponents(int count) {
-		
+		//TODO: Corrigir logica
 		for (Subcomponent subcomponent : subcomponents) {
 			Piece subcomponentPiece = (Piece) subcomponent.getSubcomponent();
 			

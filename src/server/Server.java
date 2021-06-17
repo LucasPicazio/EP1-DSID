@@ -71,6 +71,7 @@ public class Server implements PartRepository{
 		processor.addSubcomponent(nucleo);
 		processor.addSubcomponent(nucleo);
 		processor.addSubcomponent(nucleo);
+		processor.addSubcomponent(nucleo);
 		motherBoard.addSubcomponent(ram);
 		motherBoard.addSubcomponent(ram);
 		motherBoard.addSubcomponent(processor);
@@ -91,12 +92,17 @@ public class Server implements PartRepository{
 		
 		String name = args[0];
 		int port = Integer.parseInt(args[1]);
+		// TODO: validar range da porta
+//		if (port < 0 || port > 9999) {
+//			
+//		}
 		
-		//Valida��o da porta
+		
+		//Validacao da porta
 		try {
 			Registry registry = LocateRegistry.getRegistry(port);
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
+			System.out.println("Invalid port number");
 			e.printStackTrace();
 			return;
 		}
