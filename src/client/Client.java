@@ -96,7 +96,7 @@ public class Client {
 		String pieceName = splitedParams[0];
 		String pieceDescription = "";
 		if (splitedParams.length > 1) {
-			pieceDescription = params.substring(pieceName.length());
+			pieceDescription = params.substring(pieceName.length()).trim();
 		}
 		currentPiece = new Piece(pieceName, pieceDescription, currentRepository);
 		
@@ -114,7 +114,7 @@ public class Client {
 			System.out.println(NO_SELECTED_PIECE_ERROR);
 			return;
 		}
-		System.out.println("\n" + currentPiece.toString() + "\n");
+		System.out.println("\nPIECE INFO\n" + currentPiece.toString() + "\n");
 	}
 
 	private static void showCommands() {
@@ -180,12 +180,12 @@ public class Client {
 			}
 			Subcomponent subcomponent = new Subcomponent(currentPiece, quantity);
 			currentSubcomponents.add(subcomponent);
+			System.out.println("\n" + quantity + "x " + currentPiece.getName()
+							 + " added to local subcomponents list\n");
 		} catch (NumberFormatException e){
 			System.out.println("\n" + firstParam + " isnt a number!\n");
 			return;
 		}
-		System.out.println("\n" + currentPiece.getCode() + ":" 
-		+ currentPiece.getName() + " added to local subcomponents list\n");
 	}
 
 	private static void addPiece() {

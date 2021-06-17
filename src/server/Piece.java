@@ -119,8 +119,8 @@ public class Piece implements Part{
 	
 	@Override
 	public String toString() {
-		String pieceInfo = "PIECE INFO\n"
-		+ "Code: " + this.code
+		String pieceInfo = 
+		  "Code: " + this.code
 		+ "\nName: " + this.name
 		+ "\nDesc: " + this.description;
 		return pieceInfo;
