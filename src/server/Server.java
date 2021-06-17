@@ -42,11 +42,11 @@ public class Server implements PartRepository{
 	}
 
 	@Override
-	public void addPart(String name, String description) {
+	public void addPart(String name, String description, List<Subcomponent> subcomponents) {
 		
 		int pieceCode = containsPart(name);
 		if (pieceCode == -1) {
-			Piece newPiece = new Piece (name, description, serverName);
+			Piece newPiece = new Piece (name, description, serverName, subcomponents);
 			pieces.add(newPiece);
 		} else {
 			System.out.println("The piece " + name + " is already registered with code " + pieceCode);
@@ -92,7 +92,7 @@ public class Server implements PartRepository{
 		String name = args[0];
 		int port = Integer.parseInt(args[1]);
 		
-		//Validação da porta
+		//Validaï¿½ï¿½o da porta
 		try {
 			Registry registry = LocateRegistry.getRegistry(port);
 		} catch (RemoteException e) {

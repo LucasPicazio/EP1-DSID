@@ -26,6 +26,18 @@ public class Piece implements Part{
 		
 	}
 	
+	public Piece(String name, String description, String serverName, List<Subcomponent> subcomponents) {
+		if (lastCode == null) {
+			this.lastCode = 0;
+		} else {
+			lastCode++;
+		}
+		this.code = lastCode;
+		this.name = name;
+		this.description = description;
+		this.serverName = serverName;
+		this.subcomponents = subcomponents;
+	}
 	
 	@Override
 	public void addSubcomponent(Piece piece) {
@@ -100,4 +112,17 @@ public class Piece implements Part{
 		return code;
 	}
 	
+	@Override
+	public void setSubcomponents(List<Subcomponent> subcomponents) {
+		this.subcomponents = subcomponents;
+	}
+	
+	@Override
+	public String toString() {
+		String pieceInfo = "PIECE INFO\n"
+		+ "Code: " + this.code
+		+ "\nName: " + this.name
+		+ "\nDesc: " + this.description;
+		return pieceInfo;
+	}
 }

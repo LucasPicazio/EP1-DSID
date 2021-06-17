@@ -21,4 +21,6 @@ public interface Part {
 	public String getName();
 	
 	public int getCode();
+	
+	public void setSubcomponents(List<Subcomponent> subcomponents);
 }
