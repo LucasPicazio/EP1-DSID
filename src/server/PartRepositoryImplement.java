@@ -2,6 +2,7 @@ package server;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PartRepositoryImplement extends UnicastRemoteObject implements PartRepository{
@@ -14,7 +15,7 @@ public class PartRepositoryImplement extends UnicastRemoteObject implements Part
 	
 	public static String serverName;
 	public static int port;
-	public static List <Piece> pieces;
+	public static List <Piece> pieces = new ArrayList<Piece>();
 	
 	public static String getServerName() {
 		return serverName;
