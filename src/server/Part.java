@@ -11,7 +11,8 @@ public interface Part {
 	
 	public List<Subcomponent> getSubcomponents();
 	
-	public int countSubcomponents();
+	//Recursive method. Should be called passing zero as parameter for index and count
+	public int countSubcomponents(int count);
 	
 	public void addSubcomponent(Piece piece);
 	
@@ -20,4 +21,6 @@ public interface Part {
 	public String getName();
 	
 	public int getCode();
+	
+	public void setSubcomponents(List<Subcomponent> subcomponents);
 }

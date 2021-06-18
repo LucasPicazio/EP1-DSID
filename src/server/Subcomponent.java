@@ -9,6 +9,11 @@ public class Subcomponent {
 		this.quantity = 1;
 	}
 	
+	public Subcomponent(Part subcomponent, int quantity) {
+		this.subcomponent = subcomponent;
+		this.quantity = quantity;
+	}
+	
 	public int getQuantity() {
 		return quantity;
 	}

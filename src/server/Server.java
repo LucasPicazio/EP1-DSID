@@ -15,8 +15,7 @@ public class Server{
 			LocateRegistry.createRegistry(1099);
 			PartRepository partRepo = new PartRepositoryImplement();
 			Naming.bind("PartService", (Remote) partRepo);
-		}
-		catch (Exception e){
+			catch (Exception e){
 			e.printStackTrace();
 		}
 	}
