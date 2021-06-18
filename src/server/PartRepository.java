@@ -1,17 +1,24 @@
 package server;
 
-import java.util.List;
+import java.util.ArrayList;
+
+import commons.Part;
+import commons.Piece;
+
 import java.rmi.*;
 
 public interface PartRepository extends Remote{
 
-	public Piece getPart(int code) throws Exception;
+	public Part getPart(int code) throws Exception;
 
-	public void addPart(String name, String description, List<Subcomponent> subcomponents) throws Exception;
+	//Returns "OK" on sucess
+	public String addPart(Part part) throws Exception;
 	
-	//Returns the piece code if contains or -1 if not
-	public int containsPart(String pieceName) throws Exception;
+	//Returns the piece code if exists or -1 otherwise
+	public int getPieceCodeFromName(String pieceName) throws Exception;
 	
-	public List<Piece> getPartList() throws Exception;
+	public ArrayList<Piece> getPartList() throws Exception;
+	
+	public String getName();
 
 }

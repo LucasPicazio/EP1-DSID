@@ -3,57 +3,81 @@ package server;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Calendar;
+
+import commons.Constants;
+import commons.Part;
+import commons.Piece;
 
 public class PartRepositoryImplement extends UnicastRemoteObject implements PartRepository{
 
 	private static final long serialVersionUID = 1L;
+	public static ArrayList <Piece> pieces = new ArrayList<Piece>();
 
 	protected PartRepositoryImplement() throws RemoteException {
 		super();
 	}
 	
-	public static String serverName;
-	public static int port;
-	public static List <Piece> pieces = new ArrayList<Piece>();
-	
-	public static String getServerName() {
-		return serverName;
-	}
-	
+	@Override
 	public Piece getPart(int code) throws RemoteException{
 		for (Piece piece : pieces) {
 			if (piece.getCode() == code) {
+				log("PIECE CODE " + code + " FOUND INTO REPOSITORY!"
+							+ "\nRETURNED OBJECT\n" + piece.toString());
 				return piece;
 			}
 		}
+		
+		log("PIECE CODE " + code + " NOT FOUND INTO REPOSITORY!"
+		 		  	+ "\nRETURNED NULL");
 		return null;
 	}
 
-	public void addPart(String name, String description) throws RemoteException{
-		
-		int pieceCode = containsPart(name);
+	@Override
+	public String addPart(Part part) throws Exception{
+		Piece newPiece = (Piece) part;
+		String name = newPiece.getName();
+		int pieceCode = getPieceCodeFromName(name);
 		if (pieceCode == -1) {
-			Piece newPiece = new Piece (name, description, serverName);
+			//TODO: Verificar se o codigo da peca eh repetido
 			pieces.add(newPiece);
+			log("PIECE ADDED TO RESPOSITORY!\n" + newPiece.toString());
 		} else {
-			System.out.println("The piece " + name + " is already registered with code " + pieceCode);
+			log("TRIED TO ADD PIECE " + name + ". BUT THE NAME ALREADY EXISTS ON REPOSITORY.");
+			return "The piece " + name + " name already exists on repository with code " + pieceCode;
 		}
+		return Constants.SUCESS_MESSAGE;
 	}
 
-
-	public int containsPart(String pieceName) throws RemoteException{
+	@Override
+	public int getPieceCodeFromName(String pieceName) throws Exception{
 		for (Piece piece : pieces) {
 			if (piece.getName().equals(pieceName)) {
-				return piece.getCode();
+				int code = piece.getCode();
+				log("PIECE " + pieceName + " FOUND INTO REPOSITORY!"
+							 + "\nRETURNED CODE " + code);
+				return code;
 			}
 		}
+		log("PIECE " + pieceName + " NOT FOUND INTO REPOSITORY!"
+					 + "\nRETURNED CODE -1");
 		return -1;
 	}
 
-	
-	public List<Piece> getPartList() throws RemoteException{
+	@Override
+	public ArrayList<Piece> getPartList() throws Exception{
+		log("PIECE LIST REQUESTED!");
 		return pieces;
 	}
 
+	@Override
+	public String getName() {
+		return Server.name;
+	}
+	
+	public static void log(String message) {
+		Calendar now = Calendar.getInstance();
+		String time = now.get(Calendar.HOUR_OF_DAY) + ":" + now.get(Calendar.MINUTE) + ":" + now.get(Calendar.SECOND); 
+		System.out.println("[" + time + "] " + message + "\n");
+	}
 }

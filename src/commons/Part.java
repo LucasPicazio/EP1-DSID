@@ -1,4 +1,4 @@
-package server;
+package commons;
 
 import java.util.List;
 
@@ -18,9 +18,11 @@ public interface Part {
 	
 	public Subcomponent findSubcomponent(String pieceName);
 	
+	public int getCode();
+
 	public String getName();
 	
-	public int getCode();
+	public String getDescription();
 	
 	public void setSubcomponents(List<Subcomponent> subcomponents);
 }

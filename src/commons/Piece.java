@@ -1,4 +1,4 @@
-package server;
+package commons;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -110,6 +110,11 @@ public class Piece implements Part{
 	@Override
 	public int getCode() {
 		return code;
+	}
+	
+	@Override
+	public String getDescription() {
+		return description;
 	}
 	
 	@Override
