@@ -3,9 +3,9 @@ package server;
 import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.ServerSocket;
-import java.rmi.Naming;
 import java.rmi.Remote;
 import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 
 import commons.Constants;
 
@@ -13,13 +13,14 @@ public class Server{
 	
 	public static String name;
 	
+	//O PRIMEIRO SERVIDOR PRECISA SER OBRIGATORIAMENTE A PORTA 1099!!
 	Server(String serverName, int port){
 		try {
 			name = serverName;
 			System.setProperty("java.rmi.server.hostname", "localhost");
-			LocateRegistry.createRegistry(port);
 			PartRepository partRepo = new PartRepositoryImplement();
-			Naming.bind(name, (Remote) partRepo);
+			Registry register = LocateRegistry.createRegistry(port);
+			register.rebind(name, (Remote) partRepo);
 			System.out.println("Initializing server " + name + " on port " + port + "...");
 		} catch (Exception e){
 			e.printStackTrace();
@@ -30,7 +31,7 @@ public class Server{
 		
 		//Verify if exists two params
 		if (params.length < 2) {
-			return "Insert the server name and port as parameters";
+			return "Insert the port and server name as parameters";
 		}
 		
 		try {

@@ -1,7 +1,11 @@
 package client;
 
 import java.rmi.Naming;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.ArrayList;
+
+import com.sun.tools.javac.util.List;
 
 import commons.Constants;
 import commons.Piece;
@@ -167,7 +171,7 @@ public class CommandsUtil {
 		
 		String [] splitedParams = params.split(" ");
 		String serverName = splitedParams[0];
-		String port = Constants.DEFAULT_SERVER_PORT;
+		String port = splitedParams[1]; //TODO: criar método para pegar port do server
 
 		//Verify the port
 		if (splitedParams.length > 1) {
@@ -185,6 +189,8 @@ public class CommandsUtil {
 		}
 		
 		try {
+			String[] test = LocateRegistry.getRegistry(1099).list();
+			showMessage("Lista de registers:" + test);
 			String serverAddress = "rmi://" + Constants.DEFAULT_SERVER_IP + ":" + port + "/" + serverName;
 			partRepo = (PartRepository) Naming.lookup(serverAddress);
 		} catch (Exception e) {
