@@ -11,7 +11,7 @@ public class Server{
 	
 	Server(){
 		try {
-			System.setProperty("java.rmi.server.hostname", "192.168.15.37");
+			System.setProperty("java.rmi.server.hostname", "localhost");
 			LocateRegistry.createRegistry(1099);
 			PartRepository partRepo = new PartRepositoryImplement();
 			Naming.bind("PartService", (Remote) partRepo);
