@@ -18,7 +18,5 @@ public interface PartRepository extends Remote{
 	public int getPieceCodeFromName(String pieceName) throws Exception;
 	
 	public ArrayList<Piece> getPartList() throws Exception;
-	
-	public String getName();
 
 }

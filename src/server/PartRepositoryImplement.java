@@ -3,7 +3,6 @@ package server;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import commons.Constants;
 import commons.Part;
@@ -12,12 +11,12 @@ import commons.Piece;
 public class PartRepositoryImplement extends UnicastRemoteObject implements PartRepository{
 
 	private static final long serialVersionUID = 1L;
-	public static ArrayList <Piece> pieces = new ArrayList<Piece>();
 
 	protected PartRepositoryImplement() throws RemoteException {
 		super();
 	}
 	
+	public static ArrayList <Piece> pieces = new ArrayList<Piece>();
 	@Override
 	public Piece getPart(int code) throws RemoteException{
 		for (Piece piece : pieces) {
@@ -70,14 +69,9 @@ public class PartRepositoryImplement extends UnicastRemoteObject implements Part
 		return pieces;
 	}
 
-	@Override
-	public String getName() {
-		return Server.name;
-	}
-	
 	public static void log(String message) {
-		Calendar now = Calendar.getInstance();
-		String time = now.get(Calendar.HOUR_OF_DAY) + ":" + now.get(Calendar.MINUTE) + ":" + now.get(Calendar.SECOND); 
-		System.out.println("[" + time + "] " + message + "\n");
+//		Calendar now = Calendar.getInstance();
+//		String time = now.get(Calendar.HOUR_OF_DAY) + ":" + now.get(Calendar.MINUTE) + ":" + now.get(Calendar.SECOND); 
+//		System.out.println("[" + time + "] " + message + "\n");
 	}
 }
