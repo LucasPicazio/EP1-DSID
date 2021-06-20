@@ -1,8 +1,9 @@
 package commons;
 
+import java.io.Serializable;
 import java.util.List;
 
-public interface Part {
+public interface Part extends Serializable{
 	public String getServerName();
 	
 	public String getNameAndDescription();

@@ -19,7 +19,6 @@ public class Constants {
 	
 	//Adrresses
 	public static final String DEFAULT_SERVER_IP = "localhost";
-	public static final String DEFAULT_SERVER_PORT = "1099";
 	
 	//Intervals
 	public static final int MIN_PORT_NUMBER = 0;

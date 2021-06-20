@@ -13,7 +13,6 @@ public class Server{
 	
 	public static String name;
 	
-	//O PRIMEIRO SERVIDOR PRECISA SER OBRIGATORIAMENTE A PORTA 1099!!
 	Server(String serverName, int port){
 		try {
 			name = serverName;

@@ -1,6 +1,10 @@
 package commons;
 
-public class Subcomponent {
+import java.io.Serializable;
+
+public class Subcomponent implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	private Part subcomponent;
 	private int quantity;
 	

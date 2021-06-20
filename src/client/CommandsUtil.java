@@ -118,7 +118,8 @@ public class CommandsUtil {
 			ArrayList<Piece> pieces = partRepo.getPartList();
 			String piecesInfo = "";
 			for (Piece piece : pieces) {
-				piecesInfo.concat(piece.toString() + "\n");
+				piecesInfo = piecesInfo.concat("Nome:"+piece.getName().toString() + "\n"+
+								"Code:"+piece.getCode()+"\n"+"Description:"+ piece.getDescription().toString()+"\n"+"\n");
 			}
 			showMessage(piecesInfo);
 		} catch (Exception e) {
@@ -189,8 +190,6 @@ public class CommandsUtil {
 		}
 		
 		try {
-			String[] test = LocateRegistry.getRegistry(1099).list();
-			showMessage("Lista de registers:" + test);
 			String serverAddress = "rmi://" + Constants.DEFAULT_SERVER_IP + ":" + port + "/" + serverName;
 			partRepo = (PartRepository) Naming.lookup(serverAddress);
 		} catch (Exception e) {

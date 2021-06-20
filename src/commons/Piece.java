@@ -1,10 +1,15 @@
 package commons;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
-public class Piece implements Part{
+public class Piece implements Part, Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public static Integer lastCode;
 	private int code;
 	private String name;
