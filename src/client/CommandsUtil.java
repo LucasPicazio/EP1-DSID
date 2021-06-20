@@ -1,11 +1,8 @@
 package client;
 
 import java.rmi.Naming;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.util.ArrayList;
-
-import com.sun.tools.javac.util.List;
+import java.util.List;
 
 import commons.Constants;
 import commons.Piece;
@@ -74,6 +71,37 @@ public class CommandsUtil {
 		
 		showMessage("Piece " + pieceName + " created with code " + currentPiece.getCode() + " and selected");
 	}
+	
+	private static void addPiece() {
+		if (partRepo == null) {
+			showMessage(NO_SERVER_COMM_ERROR);
+			return;
+		}
+		Piece currentPiece = Client.getCurrentPiece();
+		if (currentPiece == null) {
+			showMessage(NO_SELECTED_PIECE_ERROR);
+			return;
+		}
+		List<Subcomponent> subs = Client.getCurrentSubcomponents();
+		currentPiece.setSubcomponents(subs);
+		
+		try {
+			String response = partRepo.addPart(currentPiece);
+			if (response.equals(Constants.SUCESS_MESSAGE)) {
+				String message = "Piece " + currentPiece.getName() + " added to server repository";
+				if(subs.size() > 0) {
+					message = message.concat("with "+subs.size()+" subcomponents");
+					Client.cleanCurrentSubcomponents();					
+				}
+				showMessage(message);
+					
+			} else {
+				showMessage(response);
+			}
+		} catch (Exception e) {
+			showMessage("Failed to add piece " + currentPiece.getName() + " to server repository");
+		}
+	}
 
 	private static void showUnknowCommandError(String wrongCommand) {
 		
@@ -88,22 +116,23 @@ public class CommandsUtil {
 			showMessage(NO_SELECTED_PIECE_ERROR);
 			return;
 		}
-		showMessage("PIECE INFO\n" + currentPiece.toString());
+		showMessage("PIECE INFO:\n\n" + currentPiece.toString());
+
 	}
 
 	private static void showCommands() {
 		
 		String commandsList = 
-		  Constants.CMD_CONECT_TO_SERVER +  " <respositoryName>    connect to a repository server\n"
-		+ Constants.CMD_LIST_ALL_PIECES +    "                     lists all pieces from current repository\n"
-		+ Constants.CMD_CREATE_PIECE +      " <name> <description> creates a new piece and selects it\n"
-		+ Constants.CMD_GET_PIECE_BY_CODE + " <pieceCode>          searchs for the piece on repository and selects it when found\n"
-		+ Constants.CMD_SHOW_PIECE_INFO +    "                     show info from selected piece\n"
-		+ Constants.CMD_CLEAR_SUBCOMPONENTS +    "                 empty the local subcomponents list\n"
-		+ Constants.CMD_ADD_SUBCOMPONENTS +       " <quantity>     adds n selected pieces to the local subcomponents list\n"
-		+ Constants.CMD_ADD_PIECE +         "                      add selected piece to the server repository with subcomponents from local list\n"
-		+ Constants.CMD_LEAVE_SESSION +     "                      logout from current repository server\n"
-		+ Constants.CMD_SHOW_COMMANDS +     "                      show this message";
+		  Constants.CMD_CONECT_TO_SERVER +  " <respositoryName> <port>    connect to a repository server\n"
+		+ Constants.CMD_LIST_ALL_PIECES +    "                            lists all pieces from current repository\n"
+		+ Constants.CMD_CREATE_PIECE +      " <name> <description>        creates a new piece and selects it\n"
+		+ Constants.CMD_GET_PIECE_BY_CODE + " <pieceCode>                 searchs for the piece on repository and selects it when found\n"
+		+ Constants.CMD_SHOW_PIECE_INFO +    "                            show info from selected piece\n"
+		+ Constants.CMD_CLEAR_SUBCOMPONENTS +    "                        empty the local subcomponents list\n"
+		+ Constants.CMD_ADD_SUBCOMPONENTS +       " <quantity>            adds n selected pieces to the local subcomponents list\n"
+		+ Constants.CMD_ADD_PIECE +         "                             add selected piece to the server repository with subcomponents from local list\n"
+		+ Constants.CMD_LEAVE_SESSION +     "                             logout from current repository server\n"
+		+ Constants.CMD_SHOW_COMMANDS +     "                             show this message";
 		showMessage(commandsList);
 	}
 
@@ -117,9 +146,12 @@ public class CommandsUtil {
 		try {
 			ArrayList<Piece> pieces = partRepo.getPartList();
 			String piecesInfo = "";
+			showMessage(pieces.size()+" pieces found\n");
+
 			for (Piece piece : pieces) {
 				piecesInfo = piecesInfo.concat("Nome:"+piece.getName().toString() + "\n"+
-								"Code:"+piece.getCode()+"\n"+"Description:"+ piece.getDescription().toString()+"\n"+"\n");
+								"Code:"+piece.getCode()+"\n"+
+						"Description:"+ piece.getDescription().toString()+"\n"+"\n");
 			}
 			showMessage(piecesInfo);
 		} catch (Exception e) {
@@ -150,7 +182,7 @@ public class CommandsUtil {
 			Piece piece = (Piece) partRepo.getPart(code);
 			
 			if (piece == null) {
-				showMessage("Piece code " + piece.getCode() + " not found on server repository");
+				showMessage("Piece code " + pieceCode + " not found on server repository");
 			} else {
 				showMessage("Piece " + piece.getName() + " selected!");
 				Client.setCurrentPiece(piece);
@@ -236,29 +268,6 @@ public class CommandsUtil {
 		}
 	}
 
-	private static void addPiece() {
-		if (partRepo == null) {
-			showMessage(NO_SERVER_COMM_ERROR);
-			return;
-		}
-		Piece currentPiece = Client.getCurrentPiece();
-		if (currentPiece == null) {
-			showMessage(NO_SELECTED_PIECE_ERROR);
-			return;
-		}
-		currentPiece.setSubcomponents(Client.getCurrentSubcomponents());
-		
-		try {
-			String response = partRepo.addPart(currentPiece);
-			if (response.equals(Constants.SUCESS_MESSAGE)) {
-				showMessage("Piece " + currentPiece.getName() + " added to server repository");
-			} else {
-				showMessage(response);
-			}
-		} catch (Exception e) {
-			showMessage("Failed to add piece " + currentPiece.getName() + " to server repository");
-		}
-	}
 	
 	public static void showMessage(String message) {
 		System.out.println("\n" + message + "\n");

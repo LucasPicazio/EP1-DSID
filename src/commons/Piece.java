@@ -10,7 +10,7 @@ public class Piece implements Part, Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public static Integer lastCode;
+	private static Integer lastCode;
 	private int code;
 	private String name;
 	private String description;
@@ -19,7 +19,7 @@ public class Piece implements Part, Serializable{
 	
 	public Piece(String name, String description, String serverName) {
 		if (lastCode == null) {
-			this.lastCode = 0;
+			Piece.lastCode = 0;
 		} else {
 			lastCode++;
 		}
@@ -33,7 +33,7 @@ public class Piece implements Part, Serializable{
 	
 	public Piece(String name, String description, String serverName, List<Subcomponent> subcomponents) {
 		if (lastCode == null) {
-			this.lastCode = 0;
+			Piece.lastCode = 0;
 		} else {
 			lastCode++;
 		}
@@ -129,10 +129,24 @@ public class Piece implements Part, Serializable{
 	
 	@Override
 	public String toString() {
-		String pieceInfo = 
+		String type = this.isAggregated() ? "Aggregate" : "Primitive";
+		String pieceInfo =  
 		  "Code: " + this.code
 		+ "\nName: " + this.name
-		+ "\nDesc: " + this.description;
+		+ "\nDesc: " + this.description
+		+ "\nServer: " + this.serverName
+		+ "\nType: " + type;
+		
+		List<Subcomponent> subs = this.getSubcomponents();
+		if(subs.size() > 0) {
+			pieceInfo = pieceInfo.concat( "\nSubcomponents Count: "+subs.size());
+			pieceInfo = pieceInfo.concat( "\nSubcomponents:\n");
+			for(Subcomponent sub : subs) {
+				pieceInfo = pieceInfo.concat(sub.getQuantity() + " quantities of the piece" + sub.getSubcomponent().getName() + "\n");
+			}
+		}
+
+
 		return pieceInfo;
 	}
 }

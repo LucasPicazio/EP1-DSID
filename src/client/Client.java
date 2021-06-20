@@ -9,15 +9,10 @@ import commons.Piece;
 import commons.Subcomponent;
 
 public class Client {
-	private static Scanner in;
+	private static Scanner in = new Scanner(System.in);;
 	private static String currentRepository = "";
 	private static Piece currentPiece;
 	private static List <Subcomponent> currentSubcomponents;
-	
-	public Client() {
-		in = new Scanner(System.in);
-		currentSubcomponents = new ArrayList<Subcomponent>();
-	}
 	
 	public static void showGreetings() {
 		String greetings =
@@ -27,7 +22,7 @@ public class Client {
 		+ "\n*                                        *"
 		+ "\n******************************************"
 		+ "\n\nIf you dont know how to start, type "
-		+ Constants.CMD_SHOW_COMMANDS + "to see all available commands\n\n> ";
+		+ Constants.CMD_SHOW_COMMANDS + " to see all available commands\n\n> ";
 		System.out.print(greetings);
 	}
 
@@ -50,11 +45,15 @@ public class Client {
 	public static List<Subcomponent> getCurrentSubcomponents() {
 		return currentSubcomponents;
 	}
+	
+	public static void cleanCurrentSubcomponents() {
+		currentSubcomponents = new ArrayList<Subcomponent>();
+	}
 
 	public static void main (String [] args) {
 		showGreetings();
-		Client client = new Client();
-		
+		cleanCurrentSubcomponents();
+
 		while (true) {
 			String setence = in.nextLine();
 			CommandsUtil.processCommand(setence);
